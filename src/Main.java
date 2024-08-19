@@ -1,57 +1,46 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String input1 = scanner.nextLine();
-        String input2 = scanner.nextLine();
-        String[] elements1 = input1.split(" ");
-        String[] elements2 = input2.split(" ");
-        List<Integer> list1 = new ArrayList<>();
-        List<Integer> list2 = new ArrayList<>();
-
-        for (String j : elements1) {
-            list1.add(Integer.parseInt(j));
+        double budget = Double.parseDouble(scanner.nextLine());
+        String input = scanner.nextLine();
+        String[] elements = input.split(" ");
+        List<Integer> drumQuality = new ArrayList<>();
+        for (String element : elements) {
+            drumQuality.add(Integer.parseInt(element));
         }
+        List<Integer> startingDrumQuality = new ArrayList<>(drumQuality);
 
-        for (String k : elements2) {
-            list2.add(Integer.parseInt(k));
-        }
-
-        int end = Math.min(list1.size(),list2.size());
-        int index = list2.size() - 1;
-        List<Integer> mixedList = new ArrayList<>();
-
-        for (int i = 0; i < end; i++) {
-            mixedList.add(list1.get(i));
-            mixedList.add(list2.get(index));
-            index--;
-        }
-        int startRange ;
-        int endRange;
-        if (list1.size() > list2.size()) {
-            endRange = list1.getLast();
-            list1.removeLast();
-            startRange = list1.getLast();
-        } else {
-            endRange = list2.getFirst();
-            list2.removeFirst();
-            startRange = list2.getFirst();
-        }
-
-        if (startRange > endRange) {
-            int temp = startRange;
-            startRange = endRange;
-            endRange = temp;
-        }
-        mixedList.sort(Comparator.naturalOrder());
-        for (Integer integer : mixedList) {
-            if (integer > startRange && integer < endRange) {
-                System.out.print(integer + " ");
+        while (true) {
+            String command = scanner.nextLine();
+            if (command.equals("Hit it again, Gabsy!")) {
+                break;
             }
+            int damage = Integer.parseInt(command);
+            int index = 0;
+            for (int i = 0; i < drumQuality.size(); i++) {
+                drumQuality.set(index, drumQuality.get(i) - damage);
+                if (drumQuality.get(index) <= 0 && budget >= startingDrumQuality.get(index) * 3) {
+                    drumQuality.set(index,startingDrumQuality.get(index));
+                    budget -= startingDrumQuality.get(index) * 3;
+                    index++;
+                } else if (drumQuality.get(index) <=0) {
+                    drumQuality.remove(index);
+                    startingDrumQuality.remove(index);
+                    i--;
+                } else index++;
+
+            }
+
+
         }
+        for (int i = 0; i < drumQuality.size(); i++) {
+            System.out.print(drumQuality.get(i) + " ");
+        }
+        System.out.println();
+        System.out.printf("Gabsy has %.2flv.",budget);
     }
 }
