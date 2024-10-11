@@ -1,16 +1,33 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        List<Integer> numbers = new ArrayList<>(Arrays.stream(sc.nextLine().split(" ")).map(Integer::parseInt).toList());
-        numbers.removeIf(integer -> integer < 0);
-        if (numbers.isEmpty()) {
-            System.out.println("empty");
-        } else {
-            Collections.reverse(numbers);
-            System.out.println(numbers.toString().replaceAll("[\\[\\],]", ""));
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        String[] elements = input.split(" ");
+        List<Integer> list = new ArrayList<>();
+        int sum;
+        for (String j : elements) {
+            list.add(Integer.parseInt(j));
         }
+        String text = scanner.nextLine();
+        StringBuilder result = new StringBuilder();
+        StringBuilder buildText = new StringBuilder(text);
+        for (int number : list) {
+            sum = 0;
+            while (number > 0) {
+                int lastDigit = number % 10;
+                sum += lastDigit;
+                number /= 10;
+            }
+            int index = sum % buildText.length();
+            char letter = buildText.charAt(index);
+            result.append(letter);
+            buildText.deleteCharAt(index);
 
+        }
+        System.out.println(result);
     }
 }
