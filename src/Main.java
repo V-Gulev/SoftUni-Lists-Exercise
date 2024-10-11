@@ -3,21 +3,29 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<Integer> numbers = new ArrayList<>(Arrays.stream((scanner.nextLine().split(" "))).map(Integer::parseInt).toList());
+        List<String> peopleGoing = new ArrayList<>();
+        int n = Integer.parseInt(scanner.nextLine());
 
-        while (true) {
-            String[] command = scanner.nextLine().split(" ");
-            if (command[0].equals("end")) {
-                break;
-            } else if (command[0].equals("Delete")) {
-                numbers.removeAll(Collections.singleton(Integer.parseInt(command[1])));
+        for (int i = 0; i < n; i++) {
+            String[] input = scanner.nextLine().split(" ");
+
+            if (input[2].equals("not")) {
+                if (peopleGoing.contains(input[0])) {
+                    peopleGoing.remove(input[0]);
+                } else {
+                    System.out.println(input[0] + " is not in the list!");
+                }
             } else {
-                numbers.add(Integer.parseInt(command[2]), Integer.parseInt(command[1]));
+                if (peopleGoing.contains(input[0])) {
+                    System.out.println(input[0] + " is already in the list!");
+                } else {
+                    peopleGoing.add(input[0]);
+                }
             }
 
         }
-        for (int num : numbers) {
-            System.out.print(num + " ");
+        for (String name : peopleGoing) {
+            System.out.println(name);
         }
     }
 }
