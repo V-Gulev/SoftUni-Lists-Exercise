@@ -1,31 +1,23 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<Integer> trainWagons = new ArrayList<>(Arrays.stream((scanner.nextLine().split(" "))).map(Integer::parseInt).toList());
-        int maxCapacity = Integer.parseInt(scanner.nextLine());
+        List<Integer> numbers = new ArrayList<>(Arrays.stream((scanner.nextLine().split(" "))).map(Integer::parseInt).toList());
+
         while (true) {
             String[] command = scanner.nextLine().split(" ");
             if (command[0].equals("end")) {
                 break;
-            } else if (command[0].equals("Add")) {
-                trainWagons.add(Integer.parseInt(command[1]));
+            } else if (command[0].equals("Delete")) {
+                numbers.removeAll(Collections.singleton(Integer.parseInt(command[1])));
             } else {
-                for (int i = 0; i < trainWagons.size(); i++) {
-                    if (trainWagons.get(i) + Integer.parseInt(command[0]) <= maxCapacity) {
-                        trainWagons.set(i, trainWagons.get(i) + Integer.parseInt(command[0]));
-                        break;
-                    }
-                }
+                numbers.add(Integer.parseInt(command[2]), Integer.parseInt(command[1]));
             }
 
         }
-        for (int wagon : trainWagons) {
-            System.out.print(wagon + " ");
+        for (int num : numbers) {
+            System.out.print(num + " ");
         }
     }
 }
