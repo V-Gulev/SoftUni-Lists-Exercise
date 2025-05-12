@@ -1,1 +1,1 @@
-Lists Exercise
+SoftUni Lists Exercise
